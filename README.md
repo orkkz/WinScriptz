@@ -1,10 +1,9 @@
-<p align="center">
-  <img src="https://github.com/orkkz/WinScriptz/raw/main/WinScriptz.png"/>
-</p>
-
-#                                          WinScriptz
-
-WinScriptz is a Windows backdoor built in Python that remains undetected by antivirus software and allows remote execution of various actions on a target machine.  
+<div align="center">
+  <img src="https://github.com/orkkz/WinScriptz/raw/main/WinScriptz.png" height="200px" width="400px" style="display: block; margin: 0 auto;">
+  <span style="display: block; font-size: 15.77px; font-weight: bold; margin-top: -70px;">
+    WinScriptz: An open-source Windows backdoor enabling remote script execution.
+  </span>
+</div>
 
 ## Features  
 - **Undetected Execution** – Uses evasion techniques to bypass antivirus detection.  
