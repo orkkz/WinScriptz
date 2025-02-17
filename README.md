@@ -1,9 +1,7 @@
-<div align="center">
-  <img src="https://github.com/orkkz/WinScriptz/raw/main/WinScriptz.png" height="200px" width="400px" style="display: block; margin: 0 auto;">
-  <span style="display: block; font-size: 15.77px; font-weight: bold; margin-top: -70px;">
-    WinScriptz: An open-source Windows backdoor enabling remote script execution.
-  </span>
-</div>
+<p align="center" style="margin-top: 50px; padding: 0;">
+  <img src="https://affanorakzai.us.kg/WinScriptz.png"style="display: block; margin: 0; padding: 0;">
+</p>
+<p align="center"><b style="font-size: 50px">WinScriptz: An open-source Windows backdoor enabling remote script execution./b></p>
 
 ## Features  
 - **Undetected Execution** – Uses evasion techniques to bypass antivirus detection.  
