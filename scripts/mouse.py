@@ -1,6 +1,3 @@
-import pyautogui
-import time
-
 def freeze_mouse(duration=10):
     x, y = pyautogui.position()
     start_time = time.time()

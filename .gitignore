@@ -172,3 +172,5 @@ cython_debug/
 
 # Test files
 decode.py
+exec-copy.py
+source.py

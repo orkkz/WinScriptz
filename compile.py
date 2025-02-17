@@ -44,5 +44,6 @@ else:
     os.system(f"""pyinstaller source.py --noconsole --onefile --icon={icon} --name="{name}" """)
     print("Appending data for AV evasion.")
     increasesize.append_data(f"dist\{name}.exe")
+    os.system(f'del {name}.spec')
     os.system('cls')
     print("Your executable is ready. It can be found in the the dist directory.")
