@@ -48,6 +48,16 @@ To queue scripts to the remote computers, you can create your own scripts that c
 
 **Note**: The queue-scripts.py must be ran on the server computer to be able to queue scripts.
 
+**Helpful**: To queue scripts on a single computer you can put the script inside the following code block.
+
+```py
+import os
+if 'JohnKennedy' == os.getlogin():
+  # Script code here
+```
+
+'JohnKennedy' is the name of the user, it can be found in the `replies` directory.
+
 
 #                                           DISCLAIMER
 

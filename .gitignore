@@ -174,3 +174,5 @@ cython_debug/
 decode.py
 exec-copy.py
 source.py
+test.py
+keys.txt

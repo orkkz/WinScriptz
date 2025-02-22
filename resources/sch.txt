@@ -1,0 +1,1 @@
+schtasks /create /tn "STARTUP" /sc ONSTART /tr
