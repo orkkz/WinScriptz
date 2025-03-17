@@ -104,8 +104,8 @@ def change_scripts(url):
             f.close()
     with open("resources\installer.bat", "r") as f:
         data = f.read()
+        data = data.replace("https://server.api", url)
         f.close()
-    data = data.replace("https://server.api", url)
     with open("resources\installer.bat", "w") as f:
         f.write(data)
         f.close()

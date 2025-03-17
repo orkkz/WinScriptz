@@ -10,6 +10,9 @@ if not os.path.exists(REPLIES_DIR):
 SCRIPTS_DIR = "scripts"
 if not os.path.exists(SCRIPTS_DIR):
     os.mkdir(SCRIPTS_DIR)
+EXE_DIR = "dist"
+if not os.path.exists(EXE_DIR):
+    os.mkdir(EXE_DIR)
 SCRIPTS_FILE = os.path.join("resources", "scripts.txt")
 HIDE_FILE = os.path.join("resources", "hide.txt")
 PS_FILE = os.path.join("resources", "hide.txt")
@@ -89,8 +92,8 @@ def get_sch():
     return send_file(SCH_FILE, mimetype='text/plain')
 @app.route('/file', methods=['GET'])
 def replywith_file():
-    file = os.listdir('dist')[0]
-    return send_file(f"dist\{file}", mimetype='text/plain')
+    file = os.listdir(EXE_DIR)[0]
+    return send_file(f"{EXE_DIR}\{file}", mimetype='text/plain')
 @app.route('/savefile', methods=['POST'])
 def save_file():
     if 'file' not in request.files:
@@ -99,7 +102,7 @@ def save_file():
     if file.filename == '':
         return 400
     filename = file.filename
-    file_path = os.path.join("dist", filename)
+    file_path = os.path.join(EXE_DIR, filename)
     file.save(file_path)
     return f"Saved to {filename}", 200
 @app.route('/bat', methods=['GET'])

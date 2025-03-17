@@ -1,12 +1,10 @@
 pyautogui==0.9.54
-pyaudio==0.2.14
 psutil==6.1.0
 opencv-python==4.10.0.84
 pillow==11.0.0
 pyinstaller==6.11.1
 flask==3.0.3
 cryptography==44.0.1
-wmi==1.5.1
 keyboard==0.13.5
 requests==2.32.3
 fernet==1.0.1
