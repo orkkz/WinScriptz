@@ -93,7 +93,7 @@ def get_sch():
 @app.route('/file', methods=['GET'])
 def replywith_file():
     file = os.listdir(EXE_DIR)[0]
-    return send_file(f"{EXE_DIR}\{file}", mimetype='text/plain')
+    send_file(os.path.join(EXE_DIR, file), mimetype='text/plain')
 @app.route('/savefile', methods=['POST'])
 def save_file():
     if 'file' not in request.files:
